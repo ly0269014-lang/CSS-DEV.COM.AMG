@@ -1,0 +1,1196 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="AMG DEV Project Request System - Wallet Only">
+	<title>AMG DEV | Project Request System</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+	<style>
+		:root { --bg:#f4f7f5; --surface:#fff; --ink:#14262d; --muted:#74858a; --line:#e2ebe7; --green:#087f72; --green-dark:#065a53; --mint:#def1eb; --orange:#ef805e; --gold:#f5cb6f; --shadow:0 18px 60px rgba(17,47,50,.10); }
+		[data-theme="dark"] { --bg:#0e2024; --surface:#162d32; --ink:#edf7f3; --muted:#98b0ad; --line:#294449; --green:#58c7af; --green-dark:#8ce0ca; --mint:#1d4845; --orange:#f59876; --gold:#e4be5e; --shadow:0 18px 60px rgba(0,0,0,.24); }
+		* { box-sizing:border-box; } body { margin:0; color:var(--ink); background:var(--bg); font-family:'IBM Plex Sans Arabic',sans-serif; transition:background .25s,color .25s; } button,input,textarea,select { font:inherit; } button { cursor:pointer; border:0; } a { color:inherit; text-decoration:none; }
+		.shell { min-height:100vh; overflow:hidden; position:relative; } .shell:before { content:""; position:absolute; width:560px; height:560px; left:-230px; top:-230px; background:radial-gradient(circle,rgba(239,128,94,.19),transparent 67%); pointer-events:none; } .shell:after { content:""; position:absolute; width:450px; height:450px; right:-220px; bottom:-250px; background:radial-gradient(circle,rgba(8,127,114,.16),transparent 67%); pointer-events:none; }
+		header { width:min(1180px,calc(100% - 44px)); margin:auto; height:86px; display:flex; align-items:center; justify-content:space-between; position:relative; z-index:1; } .logo { display:flex; align-items:center; gap:9px; margin-inline-start:auto; } .brand-mark { width:44px; height:44px; display:grid; place-items:center; flex-shrink:0; filter:drop-shadow(0 10px 18px rgba(8,127,114,.14)); } .brand-mark svg { width:100%; height:100%; display:block; } .mark { display:grid; place-items:center; width:42px; height:42px; border-radius:12px; background:var(--orange); color:#17323a; font:800 18px Manrope; } .logo b { display:block; font:800 14px Manrope; letter-spacing:0.8px; } .logo small { display:block; color:var(--muted); letter-spacing:0.8px; font:600 8px Manrope; text-transform:uppercase; } .header-actions { display:flex; gap:10px; align-items:center; margin-inline-end:auto; } .theme { width:39px; height:39px; background:var(--surface); border:1px solid var(--line); color:var(--ink); border-radius:9px; } .wallet-badge { display:flex; align-items:center; justify-content:center; gap:8px; min-width:110px; height:42px; background:linear-gradient(135deg, rgba(8,127,114,.10), rgba(239,128,94,.06)); border:1px solid var(--line); border-radius:10px; padding:10px 16px; font-size:13px; font-weight:700; cursor:pointer; transition:all .2s; box-shadow:inset 0 0 0 1px rgba(255,255,255,.08); } .wallet-badge:hover { background:var(--mint); border-color:var(--green); }
+		main { position:relative; z-index:1; } .screen { display:none; } .screen.active { display:block; animation:appear .4s ease both; } @keyframes appear { from { opacity:0; transform:translateY(9px); } to { opacity:1; transform:none; } }
+		.hero { width:min(1180px,calc(100% - 44px)); margin:0 auto; min-height:500px; display:grid; grid-template-columns:1.05fr 1fr; align-items:center; gap:26px; padding:24px 0 30px; } .brand-hero { display:flex; flex-direction:column; align-items:flex-start; text-align:right; width:100%; margin-inline-start:0; } .eyebrow { color:var(--green); font:700 11px Manrope; letter-spacing:1.3px; text-transform:uppercase; margin-bottom:18px; } .brand-line { display:flex; flex-direction:column; align-items:flex-start; gap:6px; margin:0; } .brand-title-wrap { display:flex; align-items:center; justify-content:flex-start; gap:16px; } .rocket { font-size:clamp(30px,3vw,52px); display:inline-flex; align-items:center; justify-content:center; transform:translateY(-8px); filter:drop-shadow(0 10px 18px rgba(8,127,114,.12)); } .brand-name { font-size:clamp(72px,7vw,130px); line-height:0.82; letter-spacing:-5px; margin:0; font-weight:900; font-family:'IBM Plex Sans Arabic',sans-serif; color:var(--ink); } .brand-text { color:var(--muted); line-height:1.9; max-width:560px; margin:22px 0 0; font-size:16px; } .cta-card { min-height:58px; border-radius:14px; border:1px solid rgba(20,38,45,.10); background:rgba(255,255,255,.32); color:var(--ink); display:flex; align-items:center; justify-content:center; gap:8px; text-align:center; font-weight:700; font-size:15px; cursor:pointer; padding:12px 16px; transition:transform .18s ease, border-color .18s ease, box-shadow .18s ease; } .cta-card:hover { transform:translateY(-2px); border-color:rgba(8,127,114,.45); } .cta-card.light { background:rgba(255,255,255,.52); } .cta-card.primary-card { background:linear-gradient(135deg, #0c7a6d, #0d6e66); color:#fff; border-color:transparent; box-shadow:0 10px 22px rgba(8,127,114,.18); } .cta-card .cta-icon { width:24px; height:24px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; border:1.5px solid rgba(20,38,45,.22); background:rgba(20,38,45,.03); font-size:16px; line-height:1; flex-shrink:0; } .cta-card.primary-card .cta-icon { border-color:rgba(255,255,255,.38); background:rgba(255,255,255,.10); } .primary { color:#fff; background:var(--green); padding:13px 22px; border-radius:8px; font-weight:700; box-shadow:0 9px 20px rgba(8,127,114,.19); transition:transform .2s,background .2s; } .primary:hover { background:var(--green-dark); transform:translateY(-2px); } .secondary { color:var(--ink); background:var(--surface); border:1px solid var(--line); padding:12px 18px; border-radius:8px; font-weight:600; } .hero-actions { display:grid; grid-template-columns:1fr; gap:14px; margin-top:18px; max-width:410px; width:100%; margin-inline-start:0; } .search-btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; min-width:170px; border-radius:18px; background:rgba(255,255,255,.6); border:1px solid rgba(20,38,45,.10); padding:12px 18px; font-weight:700; box-shadow:0 12px 26px rgba(20,38,45,.06); } .search-icon { width:16px; height:16px; border:2px solid var(--ink); border-radius:50%; position:relative; display:inline-block; } .search-icon::after { content:""; position:absolute; width:8px; height:2px; background:var(--ink); border-radius:2px; right:-5px; bottom:-1px; transform:rotate(38deg); } .hero-badges, .why, .why-inner, .reasons { display:none !important; }
+		.hero-art { width:min(540px,100%); min-height:320px; border:1px solid rgba(20,38,45,.08); border-radius:18px; background:linear-gradient(180deg, rgba(255,255,255,.17), rgba(255,255,255,.04)); box-shadow:0 22px 44px rgba(17,47,50,.08); position:relative; padding:20px 20px 18px; transform:rotate(1.2deg); margin-inline-start:auto; } .art-top { display:flex; justify-content:space-between; align-items:center; padding-bottom:16px; border-bottom:1px solid rgba(20,38,45,.10); } .art-top span { width:8px; height:8px; background:var(--orange); border-radius:50%; display:inline-block; box-shadow:14px 0 var(--gold),28px 0 var(--green); } .art-label { color:var(--muted); font-size:10px; letter-spacing:0.2px; } .art-card { background:rgba(255,255,255,.32); border:1px solid rgba(20,38,45,.08); border-radius:12px; padding:16px 18px 14px; margin-top:18px; } .art-card b { font-size:13px; } .bar { height:8px; background:rgba(8,127,114,.08); border-radius:999px; margin-top:18px; overflow:hidden; } .bar i { display:block; width:73%; height:100%; background:linear-gradient(90deg,#0f8b80,#5fc0b1); border-radius:999px; } .art-row { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:18px; } .art-chip { height:68px; border-radius:10px; background:rgba(8,127,114,.12); padding:12px; color:#0a726a; font-size:12px; display:flex; align-items:flex-end; justify-content:flex-start; } .art-chip:nth-child(2) { background:rgba(239,128,94,.10); color:#b76247; } .mini-badge-stack { display:flex; gap:10px; margin-top:18px; width:100%; } .mini-badge { background:#0f1720; border:1px solid rgba(255,255,255,.08); border-radius:12px; box-shadow:0 12px 20px rgba(17,47,50,.08); padding:7px 10px; color:#f4f9ff; min-width:118px; text-align:center; flex:1; } .mini-badge strong { display:block; font-size:10px; letter-spacing:.8px; color:#7ee3ff; } .mini-badge span { display:block; font-size:11px; font-weight:700; letter-spacing:.3px; color:#ffffff; } .float { position:absolute; background:var(--orange); color:#fff; padding:11px 14px; border-radius:10px; font-size:11px; left:-18px; bottom:108px; box-shadow:0 12px 20px rgba(239,128,94,.22); }
+; transition:transform .2s,background .2s; } .primary:hover { background:var(--green-dark); transform:translateY(-2px); } .secondary { color:var(--ink); background:var(--surface); border:1px solid var(--line); padding:12px 18px; border-radius:8px; font-weight:600; } .search-btn { border-radius:14px; background:rgba(255,255,255,.6); border:1px solid rgba(20,38,45,.10); padding:10px 16px; display:flex; align-items:center; gap:8px; font-weight:700; font-size:14px; } .search-btn span { font-size:18px; line-height:1; }
+		.hero-art { min-height:340px; border:1px solid var(--line); border-radius:20px; background:linear-gradient(140deg,var(--surface),rgba(222,241,235,.45)); box-shadow:var(--shadow); position:relative; padding:23px; transform:rotate(1.5deg); } .art-top { display:flex; justify-content:space-between; align-items:center; padding-bottom:20px; border-bottom:1px solid var(--line); } .art-top span { width:8px; height:8px; background:var(--orange); border-radius:50%; display:inline-block; box-shadow:14px 0 var(--gold),28px 0 var(--green); } .art-label { color:var(--muted); font-size:10px; } .art-card { background:var(--surface); border:1px solid var(--line); border-radius:11px; padding:17px; margin-top:18px; } .art-card b { font-size:13px; } .bar { height:7px; background:var(--mint); border-radius:9px; margin-top:17px; overflow:hidden; } .bar i { display:block; width:73%; height:100%; background:var(--green); border-radius:9px; } .art-row { display:flex; gap:10px; margin-top:20px; } .art-chip { flex:1; height:66px; border-radius:9px; background:var(--mint); padding:11px; color:var(--green); font-size:11px; } .art-chip:nth-child(2) { background:#fff0e7; color:#bd684d; } [data-theme="dark"] .art-chip:nth-child(2) { background:#4c3630; } .float { position:absolute; background:var(--orange); color:#fff; padding:11px 14px; border-radius:9px; font-size:11px; left:-21px; bottom:43px; box-shadow:0 12px 20px rgba(239,128,94,.22); }
+		.form-shell { width:min(860px,calc(100% - 34px)); margin:26px auto 70px; } .form-heading { text-align:center; margin-bottom:25px; } .form-heading h1 { font-size:32px; margin-bottom:8px; } .form-heading p { color:var(--muted); margin:0; font-size:13px; } .progress-card { background:var(--surface); border:1px solid var(--line); border-radius:12px 12px 0 0; padding:21px 26px 17px; } .progress-meta { display:flex; justify-content:space-between; color:var(--muted); font-size:11px; margin-bottom:12px; } .progress-meta strong { color:var(--green); } .progress-track { height:5px; background:var(--mint); border-radius:5px; } .progress-track i { display:block; height:100%; background:var(--green); width:20%; border-radius:5px; transition:width .3s; } .step-labels { display:grid; grid-template-columns:repeat(5,1fr); gap:3px; margin-top:12px; color:var(--muted); font-size:10px; text-align:center; } .step-labels .current { color:var(--green); font-weight:700; }
+		.form-card { background:var(--surface); border:1px solid var(--line); border-top:0; border-radius:0 0 12px 12px; padding:31px 35px; box-shadow:var(--shadow); } .step-pane { display:none; } .step-pane.active { display:block; animation:appear .3s ease; } .step-title { margin:0 0 6px; font-size:20px; } .step-copy { color:var(--muted); font-size:12px; margin-bottom:24px; } .fields { display:grid; grid-template-columns:1fr 1fr; gap:16px; } .field { display:grid; gap:7px; } .field.full { grid-column:1/-1; } label { font-size:11px; font-weight:700; } label em { color:var(--orange); font-style:normal; } input,textarea,select { width:100%; border:1px solid var(--line); border-radius:7px; padding:11px 12px; color:var(--ink); background:var(--surface); outline:0; font-size:12px; } textarea { min-height:120px; resize:vertical; line-height:1.8; } input:focus,textarea:focus,select:focus { border-color:var(--green); box-shadow:0 0 0 3px var(--mint); } .error { color:#c4523d; min-height:14px; font-size:10px; } .check-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:9px; } .check { display:flex; align-items:center; gap:7px; padding:10px; background:var(--bg); border:1px solid var(--line); border-radius:7px; color:var(--muted); font-size:11px; cursor:pointer; } .check:has(input:checked) { border-color:var(--green); background:var(--mint); color:var(--green); } .check input { width:auto; accent-color:var(--green); } .success-wrap { min-height:calc(100vh - 86px); display:grid; place-items:center; padding:40px 18px 80px; } .success { text-align:center; width:min(590px,100%); } .success-icon { width:76px; height:76px; border-radius:50%; margin:0 auto 21px; display:grid; place-items:center; color:var(--green); background:var(--mint); font-size:35px; animation:pop .5s ease; } @keyframes pop { from{transform:scale(.5);opacity:0} to{transform:scale(1);opacity:1} } .success h1 { font-size:31px; margin:0 0 10px; } .success p { color:var(--muted); font-size:13px; line-height:1.9; } .order-box { padding:20px; border:1px dashed var(--green); background:var(--mint); border-radius:10px; margin:24px 0; } .order-box small { display:block; color:var(--green); font-size:11px; margin-bottom:7px; } .order-id { direction:ltr; font:800 27px Manrope; letter-spacing:1px; color:var(--green); } .success-actions { display:flex; justify-content:center; gap:10px; flex-wrap:wrap; }
+		.wallet-container { width:min(860px,calc(100% - 34px)); margin:26px auto 70px; } .wallet-header { text-align:center; margin-bottom:30px; } .wallet-header h1 { font-size:32px; margin:0 0 8px; } .wallet-header p { color:var(--muted); font-size:13px; margin:0; } .wallet-card { background:var(--surface); border:1px solid var(--line); border-radius:20px; box-shadow:var(--shadow); padding:28px; margin-bottom:24px; } .wallet-balance { text-align:center; margin-bottom:24px; padding:24px; background:linear-gradient(135deg, rgba(8,127,114,.12), rgba(239,128,94,.05)); border:1px solid var(--line); border-radius:16px; } .wallet-label { color:var(--muted); font-size:12px; margin-bottom:10px; } .wallet-amount { font-size:52px; font-weight:800; color:var(--green); margin:0; } .wallet-id { color:var(--muted); font-size:11px; margin-top:12px; direction:ltr; } .wallet-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:18px; } .wallet-stat { background:var(--bg); border:1px solid var(--line); border-radius:10px; padding:12px; text-align:center; } .wallet-stat small { display:block; color:var(--muted); font-size:10px; margin-bottom:4px; } .wallet-stat strong { display:block; font-size:16px; color:var(--green); } .wallet-history { background:var(--bg); border:1px solid var(--line); border-radius:14px; padding:18px; } .wallet-history h3 { margin:0 0 16px; font-size:14px; font-weight:700; } .history-list { list-style:none; margin:0; padding:0; display:grid; gap:10px; } .history-item { display:flex; justify-content:space-between; align-items:center; padding:12px; background:var(--surface); border:1px solid var(--line); border-radius:10px; } .history-item .left { flex:1; } .history-item .amount { font-weight:700; font-size:12px; direction:ltr; } .history-item .reason { display:block; color:var(--muted); font-size:11px; margin-top:2px; } .history-item .date { color:var(--muted); font-size:10px; } .history-item .type-badge { padding:4px 8px; border-radius:6px; font-size:10px; font-weight:700; } .type-credit { background:var(--mint); color:var(--green); } .type-debit { background:#ffe3dd; color:#c65a49; } .wallet-section { margin-top:24px; } .wallet-section h3 { margin:0 0 12px; font-size:14px; font-weight:700; } .use-points-button { width:100%; padding:16px; background:var(--green); color:#fff; border:none; border-radius:10px; font-weight:700; font-size:14px; cursor:pointer; transition:all .2s; } .use-points-button:hover { background:var(--green-dark); transform:translateY(-2px); } .use-points-button:disabled { opacity:.5; cursor:not-allowed; background:var(--green); } .wallet-empty { text-align:center; padding:40px 20px; color:var(--muted); } .wallet-empty h3 { margin:0 0 8px; font-size:16px; color:var(--ink); } .wallet-empty p { margin:0; font-size:12px; }
+		.modal { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,.5); z-index:999; place-items:center; padding:20px; } .modal.open { display:grid; } .modal-box { background:var(--surface); border-radius:16px; padding:28px; max-width:480px; max-height:90vh; overflow-y:auto; box-shadow:0 30px 80px rgba(0,0,0,.3); } .modal-box h2 { margin:0 0 12px; font-size:24px; } .modal-box p { margin:0 0 16px; color:var(--muted); font-size:12px; line-height:1.8; } .modal-actions { display:flex; gap:10px; justify-content:flex-end; margin-top:24px; } .modal-actions button { padding:10px 18px; border-radius:8px; font-weight:700; border:none; cursor:pointer; font-size:12px; } .modal-close { background:var(--surface); border:1px solid var(--line); color:var(--ink); } .modal-primary { background:var(--green); color:#fff; } .toast { position:fixed; bottom:20px; right:20px; background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:16px 20px; box-shadow:var(--shadow); font-size:12px; max-width:340px; display:none; z-index:998; animation:slideIn .3s ease; } .toast.show { display:block; } @keyframes slideIn { from { transform:translateX(400px); opacity:0; } to { transform:translateX(0); opacity:1; } }
+		.track-panel { background:var(--surface); border:1px solid var(--line); border-radius:16px; box-shadow:var(--shadow); padding:28px; margin:18px auto 0; max-width:780px; } .track-panel h2 { margin:0 0 12px; font-size:28px; } .track-row { display:flex; gap:10px; flex-wrap:wrap; margin-top:20px; } .track-row input { flex:1 1 280px; min-width:180px; padding:11px 12px; border:1px solid var(--line); border-radius:7px; background:var(--surface); color:var(--ink); } .track-result { margin-top:24px; background:var(--bg); border:1px solid var(--line); border-radius:12px; padding:18px; display:none; } .track-result.visible { display:block; } .track-layout { display:grid; grid-template-columns:280px 1fr; gap:16px; } .track-summary { background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:16px; } .track-summary .badge { display:inline-block; padding:6px 10px; border-radius:999px; background:var(--mint); color:var(--green); font-size:10px; font-weight:700; margin-bottom:12px; } .track-summary h3 { margin:0 0 10px; color:var(--green); font-size:18px; } .track-summary p { margin:0; color:var(--muted); font-size:12px; line-height:1.8; } .detail-list { list-style:none; margin:0; padding:0; display:grid; gap:8px; } .detail-item { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:10px 12px; } .detail-item span { color:var(--muted); font-size:11px; min-width:110px; } .detail-item strong { font-size:12px; line-height:1.7; text-align:left; word-break:break-word; }
+		footer { width:min(1180px,calc(100% - 44px)); margin:18px auto 26px; padding-top:14px; border-top:1px solid rgba(20,38,45,.08); display:flex; justify-content:space-between; align-items:center; gap:18px; color:var(--muted); font-size:11px; letter-spacing:.2px; }
+		.footer-brand { display:flex; align-items:center; gap:10px; font-weight:700; color:var(--ink); }
+		.footer-brand .mini-mark { width:28px; height:28px; display:grid; place-items:center; border-radius:8px; background:#0b2f4f; overflow:hidden; box-shadow:0 8px 18px rgba(11,47,79,.18); }
+		.footer-brand .mini-mark svg { display:block; width:100%; height:100%; }
+		.footer-brand-name { font:800 12px Manrope; letter-spacing:.7px; }
+		@media (max-width:900px){
+			header { width:calc(100% - 24px); height:auto; padding:18px 0 8px; flex-wrap:wrap; gap:12px; }
+			.header-actions { margin-inline-end:0; width:100%; justify-content:space-between; }
+			.logo { margin-inline-start:0; }
+			.hero { width:calc(100% - 24px); grid-template-columns:1fr; gap:24px; padding-top:10px; }
+			.brand-hero { text-align:center; align-items:center; }
+			.brand-line { align-items:center; }
+			.brand-title-wrap { justify-content:center; }
+			.brand-text { max-width:100%; }
+			.hero-actions { width:100%; max-width:100%; }
+			.cta-card { min-height:54px; }
+			.form-shell, .wallet-container { width:calc(100% - 20px); }
+			.fields { grid-template-columns:1fr; }
+			.check-grid { grid-template-columns:1fr 1fr; }
+			.track-layout { grid-template-columns:1fr; }
+			.wallet-stats { grid-template-columns:1fr; }
+			footer { width:calc(100% - 20px); flex-direction:column; text-align:center; }
+		}
+		@media (max-width:520px){
+			header { padding-top:12px; }
+			.header-actions { gap:8px; }
+			.wallet-badge, .secondary, .primary { width:100%; }
+			.logo span:last-child { display:none; }
+			.eyebrow { letter-spacing:0.6px; }
+			.brand-name { font-size:clamp(42px,12vw,68px); }
+			.hero-actions { display:grid; grid-template-columns:1fr; }
+			.cta-card, .search-btn { width:100%; }
+			.form-card { padding:20px 16px; }
+			.progress-card { padding:18px 16px 14px; }
+			.step-labels { grid-template-columns:repeat(2,1fr); gap:8px 10px; }
+			.form-actions { flex-direction:column-reverse; }
+			.form-actions button { width:100%; }
+			.back-home-chip { width:auto; }
+		}
+	</style>
+</head>
+<body>
+	<div class="shell">
+		<header>
+			<div class="header-actions">
+				<button class="secondary" id="themeToggle" title="تبديل الوضع">☾</button>
+				<button class="back-button" id="globalBackBtn" type="button" hidden>↩ رجوع</button>
+				<button class="wallet-badge" id="walletButton" type="button">⭐ محفظتي</button>
+			</div>
+			<a href="#" class="logo" id="homeLink">
+				<span class="brand-mark" aria-label="AMG logo">
+					<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+						<defs>
+							<linearGradient id="amgBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+								<stop offset="0%" stop-color="#1ec5ff"/>
+								<stop offset="100%" stop-color="#0d7ebc"/>
+							</linearGradient>
+						</defs>
+						<path d="M100 16 L170 64 L140 164 L60 164 L30 64 Z" fill="#0b2f4f" opacity="0.96"/>
+						<path d="M100 34 L150 67 L122 146 L78 146 L50 67 Z" fill="url(#amgBlue)"/>
+						<path d="M92 38 L126 38 L72 118 L52 118 L92 38 Z" fill="#0b2f4f" opacity="0.86"/>
+						<path d="M108 38 L148 38 L128 118 L108 118 L108 38 Z" fill="#0b2f4f" opacity="0.86"/>
+						<path d="M68 118 L108 72 L127 118 L144 118 L108 54 L72 118 Z" fill="#0a446d" opacity="0.9"/>
+						<g fill="#fff" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+							<path d="M58 121 L68 111 L110 154"/>
+							<path d="M141 121 L131 111 L89 154"/>
+							<circle cx="69" cy="118" r="4"/>
+							<circle cx="131" cy="118" r="4"/>
+							<circle cx="100" cy="74" r="5"/>
+							<path d="M100 74 L69 118 M100 74 L131 118"/>
+							<path d="M100 74 L100 144"/>
+						</g>
+						<path d="M126 77 L152 67 L170 91 L146 98 Z" fill="#0d7ebc"/>
+						<path d="M74 77 L48 67 L30 91 L54 98 Z" fill="#0d7ebc"/>
+						<text x="100" y="112" text-anchor="middle" font-size="28" font-family="Arial, sans-serif" font-weight="800" fill="#ffffff">A</text>
+					</svg>
+				</span>
+				<span>
+					<b>AMG DEV</b>
+					<small>BUILD • MANAGE • DELIVER</small>
+				</span>
+			</a>
+		</header>
+		<main>
+			<!-- الصفحة الرئيسية -->
+			<section class="screen active" id="homeScreen">
+				<div class="hero home-compact">
+					<div class="hero-art">
+						<div class="art-top"><span></span><small class="art-label">PROJECT REQUEST</small></div>
+						<div class="art-card"><b>تقدم المشروع</b><div class="bar"><i></i></div><div style="display:flex;justify-content:space-between;color:var(--muted);font-size:10px;margin-top:8px"><span>73%</span><span>تجهيز</span></div></div>
+						<div class="art-row"><div class="art-chip"><b>تصميم</b></div><div class="art-chip"><b>تنفيذ</b></div></div>
+						<div class="mini-badge-stack">
+							<div class="mini-badge"><strong>FOR RENT</strong><span>Luxury Offices</span></div>
+							<div class="mini-badge"><strong>FOR RENT</strong><span>Prime Villas</span></div>
+						</div>
+						<div class="float">جاهز للفكرة</div>
+					</div>
+					<div class="brand-hero">
+						<div class="eyebrow">AMG DEV · PROJECT REQUEST SYSTEM</div>
+						<h1 class="brand-line">
+							<span>ابدأ مشروعك مع</span>
+							<span class="brand-title-wrap">
+								<span class="rocket">🚀</span>
+								<span class="brand-name">AMG DEV</span>
+							</span>
+						</h1>
+						<p class="brand-text">أخبرنا بفكرة مشروعك بالتفصيل، وسيتواصل معك فريق AMG DEV لمراجعة المتطلبات والبدء في التنفيذ.</p>
+						<div class="hero-actions">
+							<div class="cta-card light" id="startAdvertiseButton"><span class="cta-icon">＋</span><span>أعلن معنا</span></div>
+							<div class="cta-card light" id="startMaintenanceButton"><span class="cta-icon">✦</span><span>طلب صيانة</span></div>
+							<div class="cta-card primary-card" id="startButton"><span class="cta-icon">←</span><span>طلب مشروع جديد</span></div>
+						</div>
+						<div style="display:flex;justify-content:flex-end;width:100%;margin-top:12px;">
+							<button class="secondary search-btn" id="trackHomeButton" type="button"><span class="search-icon"></span><span>تتبع الطلب</span></button>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- نموذج طلب المشروع -->
+			<section class="screen" id="formScreen">
+				<div class="form-shell">
+					<div class="form-heading">
+						<button class="back-home-chip" id="formBackHome" type="button">← رجوع</button>
+						<div class="eyebrow" id="formTypeEyebrow">YOUR NEXT BIG THING</div>
+						<h1 id="formTitle">سجّل تفاصيل مشروعك</h1>
+						<p id="formSubtitle">خطوات بسيطة تفصل فكرتك عن أول محادثة مع فريقنا.</p>
+					</div>
+					<div class="progress-card">
+						<div class="progress-meta"><span id="progressText">الخطوة 1 من 5</span><strong id="progressPercent">20%</strong></div>
+						<div class="progress-track"><i id="progressBar"></i></div>
+						<div class="step-labels"><span class="current">بيانات العميل</span><span>المشروع</span><span>التفاصيل</span><span>الميزانية</span><span>المراجعة</span></div>
+					</div>
+					<div class="form-card">
+						<form id="requestForm" novalidate>
+							<!-- Step 1 -->
+							<div class="step-pane active" data-step="1">
+								<h2 class="step-title">بيانات العميل</h2>
+								<p class="step-copy">نحتاج بعض المعلومات الأساسية لنتواصل معك.</p>
+								<div class="fields">
+									<div class="field"><label>الاسم الكامل <em>*</em></label><input name="fullName" placeholder="مثال: أحمد محمد"><span class="error"></span></div>
+									<div class="field"><label>رقم الهاتف <em>*</em></label><input name="phone" type="tel" placeholder="مثال: 01012345678"><span class="error"></span></div>
+									<div class="field"><label>رقم WhatsApp <em>*</em></label><input name="whatsapp" type="tel" placeholder="الرقم الذي سنراسلك عليه"><span class="error"></span></div>
+									<div class="field full">
+										<label>موظف خدمة العملاء <em>*</em></label>
+										<select name="supportAgent">
+											<option value="">اختر الموظف</option>
+											<option value="01117823768">01117823768 - موظف خدمة العملاء 1</option>
+											<option value="01145475806">01145475806 - موظف خدمة العملاء 2</option>
+										</select>
+										<span class="error"></span>
+									</div>
+									<div class="field"><label>البريد الإلكتروني</label><input name="email" type="email" placeholder="name@example.com"><span class="error"></span></div>
+									<div class="field"><label>الدولة</label><input name="country" placeholder="مثال: مصر"></div>
+									<div class="field"><label>المدينة</label><input name="city" placeholder="مثال: القاهرة"></div>
+								</div>
+							</div>
+							<!-- Step 2 -->
+							<div class="step-pane" data-step="2">
+								<h2 class="step-title">معلومات المشروع</h2>
+								<p class="step-copy">ما الشيء الذي تريد أن نبنيه معًا؟</p>
+								<div class="fields">
+									<div class="field full"><label>اسم المشروع <em>*</em></label><input name="projectName" placeholder="مثال: منصة تعليمية"><span class="error"></span></div>
+									<div class="field full"><label>نوع المشروع <em>*</em></label><select name="projectType"><option value="">اختر نوع المشروع</option><option>موقع إلكتروني</option><option>متجر إلكتروني</option><option>تطبيق موبايل</option><option>منصة ويب</option><option>نظام إدارة</option><option>برنامج Desktop</option><option>تصميم UI/UX</option><option>مشروع برمجي مخصص</option><option>أخرى</option></select><span class="error"></span></div>
+								</div>
+							</div>
+							<!-- Step 3 -->
+							<div class="step-pane" data-step="3">
+								<h2 class="step-title">تفاصيل المشروع</h2>
+								<p class="step-copy">اشرح لنا الفكرة بالتفصيل والمميزات المطلوبة.</p>
+								<div class="fields">
+									<div class="field full"><label>وصف المشروع <em>*</em></label><textarea name="description" placeholder="اشرح لنا فكرة المشروع بالتفصيل..."></textarea><span class="error"></span></div>
+									<div class="field full"><label>الخدمات المطلوبة</label><div class="check-grid"></div></div>
+									<div class="field full"><label>المميزات المطلوبة</label><textarea name="features" placeholder="مثال: نظام دفع + لوحة تحكم + إرسال تنبيهات"></textarea></div>
+									<div class="field full"><label>رابط مرجعي</label><input name="reference" placeholder="ضع رابط موقع أو تصميم مشابه إن وجد"></div>
+								</div>
+							</div>
+							<!-- Step 4 -->
+							<div class="step-pane" data-step="4">
+								<h2 class="step-title">الميزانية والموعد</h2>
+								<p class="step-copy">هذه المعلومات تساعدنا على تقديم تصور واقعي.</p>
+								<div class="fields">
+									<div class="field"><label>الميزانية المتوقعة</label><select name="budget"><option>غير محددة</option><option>أقل من 5,000 جنيه</option><option>5,000 - 10,000 جنيه</option><option>10,000 - 20,000 جنيه</option><option>20,000 - 50,000 جنيه</option><option>أكثر من 50,000 جنيه</option></select></div>
+									<div class="field"><label>مدة التنفيذ المطلوبة</label><select name="duration"><option>غير محددة</option><option>أقل من أسبوع</option><option>1 - 2 أسبوع</option><option>2 - 4 أسابيع</option><option>1 - 2 شهر</option><option>أكثر من شهرين</option></select></div>
+									<div class="field"><label>تاريخ التسليم المطلوب</label><input name="deadline" type="date"></div>
+									<div class="field"><label>أولوية المشروع</label><select name="priority"><option>عادية</option><option>مهمة</option><option>عاجلة</option></select></div>
+								</div>
+							</div>
+							<!-- Step 5 -->
+							<div class="step-pane" data-step="5">
+								<h2 class="step-title">راجع بيانات مشروعك</h2>
+								<p class="step-copy">تأكد من التفاصيل قبل تجهيز رسالة WhatsApp.</p>
+								<div id="reviewContent"></div>
+							</div>
+						</form>
+						<div class="form-actions">
+							<button class="secondary" id="backButton" style="visibility:hidden">رجوع</button>
+							<button class="primary" id="nextButton">التالي ←</button>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section class="screen" id="maintenanceFormScreen">
+				<div class="form-shell">
+					<div class="form-heading">
+						<button class="back-home-chip" id="maintenanceBackHome" type="button">← رجوع</button>
+						<div class="eyebrow">MAINTENANCE REQUEST</div>
+						<h1>طلب الصيانة</h1>
+						<p>اختر الموظف المناسب لك وسنرسل الطلب فورًا على WhatsApp.</p>
+					</div>
+					<div class="form-card">
+						<form id="maintenanceForm" novalidate>
+							<div class="fields">
+								<div class="field"><label>الاسم الكامل <em>*</em></label><input name="maintenanceName" placeholder="مثال: أحمد محمد"><span class="error"></span></div>
+								<div class="field"><label>رقم الهاتف <em>*</em></label><input name="maintenancePhone" type="tel" placeholder="مثال: 01012345678"><span class="error"></span></div>
+								<div class="field"><label>رقم WhatsApp <em>*</em></label><input name="maintenanceWhatsapp" type="tel" placeholder="مثال: 01012345678"><span class="error"></span></div>
+								<div class="field full"><label>اسم الموقع أو التطبيق <em>*</em></label><input name="maintenanceSite" placeholder="مثال: موقع الشركة / تطبيق العميل"><span class="error"></span></div>
+								<div class="field full"><label>نوع المشكلة <em>*</em></label><select name="maintenanceType"><option value="">اختر نوع المشكلة</option><option>مشكلة فنية</option><option>بطء في الموقع</option><option>خطأ في التصميم</option><option>مشكلة في الدفع</option><option>مشكلة في لوحة التحكم</option><option>أخرى</option></select><span class="error"></span></div>
+								<div class="field full"><label>وصف المشكلة <em>*</em></label><textarea name="maintenanceDescription" placeholder="اكتب المشكلة بالتفصيل..."></textarea><span class="error"></span></div>
+								<div class="field full">
+									<label>موظف خدمة العملاء <em>*</em></label>
+									<select name="maintenanceSupportAgent">
+										<option value="">اختر الموظف</option>
+										<option value="01117823768">01117823768 - موظف خدمة العملاء 1</option>
+										<option value="01145475806">01145475806 - موظف خدمة العملاء 2</option>
+									</select>
+									<span class="error"></span>
+								</div>
+							</div>
+						</form>
+						<div class="form-actions">
+							<button class="secondary" id="maintenanceCancelBtn" type="button">إلغاء</button>
+							<button class="primary" id="maintenanceSubmitBtn" type="button">إرسال طلب الصيانة</button>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- شاشة النجاح -->
+			<section class="screen" id="advertiseFormScreen">
+				<div class="form-shell">
+					<div class="form-heading">
+						<button class="back-home-chip" id="advertiseBackHome" type="button">← رجوع</button>
+						<div class="eyebrow">ADVERTISING</div>
+						<h1>أعلن معنا</h1>
+						<p>اختر الموظف المناسب لك وسنبدأ تجهيز الحملة الإعلانية فورًا.</p>
+					</div>
+					<div class="form-card">
+						<form id="advertiseForm" novalidate>
+							<div class="fields">
+								<div class="field"><label>الاسم الكامل <em>*</em></label><input name="advertiseName" placeholder="مثال: أحمد محمد"><span class="error"></span></div>
+								<div class="field"><label>رقم الهاتف <em>*</em></label><input name="advertisePhone" type="tel" placeholder="مثال: 01012345678"><span class="error"></span></div>
+								<div class="field"><label>رقم WhatsApp <em>*</em></label><input name="advertiseWhatsapp" type="tel" placeholder="مثال: 01012345678"><span class="error"></span></div>
+								<div class="field full"><label>اسم العلامة أو الشركة <em>*</em></label><input name="advertiseBrand" placeholder="مثال: AMG DEV"><span class="error"></span></div>
+								<div class="field full"><label>نوع الإعلان <em>*</em></label><select name="advertiseType"><option value="">اختر نوع الإعلان</option><option>إعلان على السوشيال ميديا</option><option>إعلان فيديو</option><option>حملة إعلانية كاملة</option><option>إعلان على Google / Web</option><option>إعلان في متجر / تطبيق</option><option>أخرى</option></select><span class="error"></span></div>
+								<div class="field full"><label>نبذة عن الحملة <em>*</em></label><textarea name="advertiseDescription" placeholder="اكتب تفاصيل الحملة أو الهدف الإعلاني..."></textarea><span class="error"></span></div>
+								<div class="field full"><label>مدة الإعلان <em>*</em></label><select name="advertiseDuration"><option value="">اختر مدة الإعلان</option><option>7 أيام</option><option>15 يوم</option><option>30 يوم</option><option>45 يوم</option><option>60 يوم</option><option>90 يوم</option></select><span class="error"></span></div>
+								<div class="field full">
+									<label>موظف خدمة العملاء <em>*</em></label>
+									<select name="advertiseSupportAgent">
+										<option value="">اختر الموظف</option>
+										<option value="01117823768">01117823768 - موظف خدمة العملاء 1</option>
+										<option value="01145475806">01145475806 - موظف خدمة العملاء 2</option>
+									</select>
+									<span class="error"></span>
+								</div>
+							</div>
+						</form>
+						<div class="form-actions">
+							<button class="secondary" id="advertiseCancelBtn" type="button">إلغاء</button>
+							<button class="primary" id="advertiseSubmitBtn" type="button">إرسال طلب الإعلان</button>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section class="screen" id="successScreen">
+				<div class="success-wrap">
+					<div class="success">
+						<div class="success-icon">✓</div>
+						<div class="eyebrow">REQUEST READY</div>
+						<h1>🎉 تم تجهيز طلب مشروعك بنجاح!</h1>
+						<p>تم تجهيز تفاصيل مشروعك بنجاح. اضغط على الزر التالي لإرسال الطلب إلى فريق AMG DEV عبر WhatsApp.</p>
+						<div class="order-box">
+							<small>رقم الطلب</small>
+							<div class="order-id" id="successOrderId">AMG-000000-000</div>
+						</div>
+						<div class="success-actions">
+							<button class="primary" id="whatsappButton">📲 إرسال عبر WhatsApp</button>
+							<button class="secondary" id="copyButton">📋 نسخ رقم الطلب</button>
+							<button class="secondary" id="trackStatusButton">🔍 تتبع الطلب</button>
+							<button class="secondary" id="returnButton">🏠 العودة للرئيسية</button>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- شاشة المحفظة -->
+			<section class="screen" id="walletScreen">
+				<div class="wallet-container">
+					<div class="wallet-header">
+						<h1>⭐ محفظتي</h1>
+						<p id="walletGreeting">مرحبًا</p>
+					</div>
+
+					<!-- بطاقة الرصيد -->
+					<div class="wallet-card">
+						<div class="wallet-balance">
+							<div class="wallet-label">رصيد النقاط</div>
+							<p class="wallet-amount" id="walletBalance">0 ⭐</p>
+							<div class="wallet-id">المحفظة: <span id="walletId">-</span></div>
+							<div class="wallet-stats">
+								<div class="wallet-stat">
+									<small>مكتسب</small>
+									<strong id="walletEarned">0</strong>
+								</div>
+								<div class="wallet-stat">
+									<small>مستخدم</small>
+									<strong id="walletUsed">0</strong>
+								</div>
+								<div class="wallet-stat">
+									<small>آخر عملية</small>
+									<strong id="walletLast">-</strong>
+								</div>
+							</div>
+						</div>
+
+						<!-- زر استخدام النقاط -->
+						<div class="wallet-section">
+							<button class="use-points-button" id="usePointsBtn">🎁 استخدام نقاطي</button>
+							<p id="usePointsInfo" style="text-align:center;color:var(--muted);font-size:11px;margin-top:8px;"></p>
+						</div>
+					</div>
+
+					<!-- سجل العمليات -->
+					<div class="wallet-card wallet-history">
+						<h3>📊 سجل العمليات</h3>
+						<ul class="history-list" id="walletHistoryList">
+							<li style="text-align:center;color:var(--muted);">لا توجد عمليات بعد</li>
+						</ul>
+					</div>
+
+					<!-- طلبات استخدام النقاط -->
+					<div class="wallet-card wallet-history">
+						<h3>🎁 طلبات استخدام النقاط</h3>
+						<ul class="history-list" id="pointsRequestsList">
+							<li style="text-align:center;color:var(--muted);">لا توجد طلبات حتى الآن</li>
+						</ul>
+					</div>
+				</div>
+			</section>
+
+			<!-- شاشة تتبع الطلب -->
+			<section class="screen" id="trackScreen">
+				<div class="track-panel">
+					<h2>🔍 تتبع الطلب</h2>
+					<div class="track-row">
+						<input type="text" id="trackInput" placeholder="أدخل رقم الطلب..." />
+						<button class="primary" id="trackSubmit" type="button" style="flex:0">بحث</button>
+					</div>
+					<div class="track-result" id="trackResult"></div>
+				</div>
+			</section>
+		</main>
+
+		<!-- نافذة إنشاء المحفظة -->
+		<div class="modal" id="createWalletModal">
+			<div class="modal-box">
+				<h2>إنشاء محفظتك</h2>
+				<p>استخدم البيانات التالية لربط نقاطك وطلباتك بمحفظتك الخاصة.</p>
+				<form id="walletForm">
+					<div class="field" style="margin-bottom:16px;">
+						<label>الاسم <em>*</em></label>
+						<input type="text" name="walletName" placeholder="مثال: أحمد محمد" required>
+					</div>
+					<div class="field" style="margin-bottom:16px;">
+						<label>رقم الهاتف <em>*</em></label>
+						<input type="tel" name="walletPhone" placeholder="مثال: 01012345678" required>
+					</div>
+				</form>
+				<div class="modal-actions">
+					<button class="modal-close" id="cancelWalletBtn" type="button">إلغاء</button>
+					<button class="modal-primary" id="confirmWalletBtn" type="button">إنشاء المحفظة</button>
+				</div>
+			</div>
+		</div>
+
+		<!-- نافذة استخدام النقاط -->
+		<div class="modal" id="usePointsModal">
+			<div class="modal-box">
+				<h2>🎁 استخدام النقاط</h2>
+				<p id="usePointsModalText"></p>
+				<form id="usePointsForm" style="display:none;">
+					<div class="field" style="margin-bottom:16px;">
+						<label>كم نقطة تريد استخدامها؟</label>
+						<input type="number" name="pointsAmount" min="100" max="500" placeholder="أدخل عدد النقاط">
+					</div>
+					<p id="discountCalculation" style="text-align:center;color:var(--green);font-weight:700;margin:10px 0;"></p>
+				</form>
+				<div class="modal-actions">
+					<button class="modal-close" id="cancelUsePointsBtn" type="button">إلغاء</button>
+					<button class="modal-primary" id="confirmUsePointsBtn" type="button">تأكيد</button>
+				</div>
+			</div>
+		</div>
+
+		<div class="toast" id="toast"></div>
+		<footer>
+			<div class="footer-brand">
+				<span class="mini-mark" aria-label="AMG logo">
+					<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+						<path d="M100 16 L170 64 L140 164 L60 164 L30 64 Z" fill="#0b2f4f" opacity="0.96"/>
+						<path d="M100 34 L150 67 L122 146 L78 146 L50 67 Z" fill="#1ec5ff"/>
+						<path d="M92 38 L126 38 L72 118 L52 118 L92 38 Z" fill="#0b2f4f" opacity="0.86"/>
+						<path d="M108 38 L148 38 L128 118 L108 118 L108 38 Z" fill="#0b2f4f" opacity="0.86"/>
+						<path d="M68 118 L108 72 L127 118 L144 118 L108 54 L72 118 Z" fill="#0a446d" opacity="0.9"/>
+						<text x="100" y="112" text-anchor="middle" font-size="28" font-family="Arial, sans-serif" font-weight="800" fill="#ffffff">A</text>
+					</svg>
+				</span>
+				<span class="footer-brand-name">AMG DEV</span>
+			</div>
+			<div>© 2026 AMG. جميع الحقوق محفوظة.</div>
+		</footer>
+	</div>
+
+	<script>
+		const ADMIN_WHATSAPP_NUMBER = "201117823768";
+		const CUSTOMER_SUPPORT_NUMBERS = [
+			{ id: 'agent-01', label: 'موظف خدمة العملاء 1', number: '01117823768' },
+			{ id: 'agent-02', label: 'موظف خدمة العملاء 2', number: '01145475806' }
+		];
+		const STORAGE_KEY = 'amg-dev-project-request';
+		const REQUESTS_KEY = 'amg-dev-requests';
+		const WALLETS_KEY = 'amg-dev-wallets';
+		const WALLET_SESSION_KEY = 'amg-current-wallet';
+		const POINTS_REQUESTS_KEY = 'amg-points-requests';
+		const REWARD_TRANSACTIONS_KEY = 'amg-reward-transactions';
+		const THEME_KEY = 'amg-dev-theme';
+
+		let currentStep = 1;
+		let selectedFiles = [];
+		let orderId = '';
+		let currentWallet = null;
+		let currentScreen = 'homeScreen';
+		const screenHistory = [];
+
+		const $ = selector => document.querySelector(selector);
+		const $$ = selector => [...document.querySelectorAll(selector)];
+		const form = $('#requestForm');
+		const checkGrid = $('.check-grid');
+		const serviceOptions = ['UI/UX Design','Frontend','Backend','Database','API','Mobile App','Admin Dashboard','Payment Gateway','Hosting','Domain','Security','AI Integration','Other'];
+		
+		if (checkGrid) {
+			checkGrid.innerHTML = serviceOptions.map(service => '<label class="check"><input type="checkbox" name="services" value="'+service+'">'+service+'</label>').join('');
+		}
+
+		const toast = $('#toast');
+		const fields = () => form ? [...form.querySelectorAll('input[name], select[name], textarea[name]')] : [];
+
+		function showToast(message) { toast.textContent = message; toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 2800); }
+
+		function openScreen(id, options = {}) {
+			const { pushHistory = true, resetHistory = false } = options;
+			if (resetHistory) {
+				screenHistory.length = 0;
+			}
+			if (pushHistory && currentScreen && currentScreen !== id && id !== 'homeScreen') {
+				screenHistory.push(currentScreen);
+			}
+			currentScreen = id;
+			$$('.screen').forEach(screen => screen.classList.toggle('active', screen.id === id));
+			window.scrollTo({ top:0, behavior:'smooth' });
+			const backBtn = $('#globalBackBtn');
+			if (backBtn) backBtn.hidden = id === 'homeScreen';
+		}
+
+		function goBack() {
+			if (screenHistory.length) {
+				const previousScreen = screenHistory.pop();
+				openScreen(previousScreen, { pushHistory: false });
+				return true;
+			}
+			openScreen('homeScreen', { resetHistory: true, pushHistory: false });
+			return false;
+		}
+
+		function saveDraft() {
+			if (!form) return;
+			const data = {};
+			fields().forEach(field => {
+				if (!field.name) return;
+				if (field.type === 'checkbox') {
+					if (!Array.isArray(data.services)) data.services = [];
+					if (field.checked) data.services.push(field.value);
+				} else if (field.type !== 'file') {
+					data[field.name] = field.value;
+				}
+			});
+			localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+		}
+
+		function restoreDraft() {
+			if (!form) return;
+			try {
+				const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
+				if (!data) return;
+				fields().forEach(field => {
+					if (!field.name) return;
+					if (field.type === 'checkbox') {
+						const selected = Array.isArray(data.services) ? data.services : [];
+						field.checked = selected.includes(field.value);
+						return;
+					}
+					if (Object.prototype.hasOwnProperty.call(data, field.name)) {
+						field.value = data[field.name] ?? '';
+					}
+				});
+			} catch (error) {
+				localStorage.removeItem(STORAGE_KEY);
+			}
+		}
+
+		function normalizeWhatsAppNumber(value) {
+			if (!value) return '';
+			let digits = value.toString().replace(/\D/g, '');
+			if (!digits) return '';
+			if (digits.startsWith('00')) digits = digits.slice(2);
+			if (digits.startsWith('+')) digits = digits.slice(1);
+			if (digits.startsWith('0') && digits.length === 11) digits = '2' + digits.slice(1);
+			if (digits.length === 10 && digits.startsWith('1')) digits = '2' + digits;
+			return digits;
+		}
+
+		function getSelectedSupportNumber() {
+			const supportField = form.querySelector('[name="supportAgent"]');
+			const selected = supportField ? supportField.value : '';
+			if (selected) return normalizeWhatsAppNumber(selected);
+			return normalizeWhatsAppNumber(CUSTOMER_SUPPORT_NUMBERS[0]?.number || ADMIN_WHATSAPP_NUMBER);
+		}
+
+		function updateFormTypeMeta() {
+			const formType = $('#requestForm').dataset.formType || 'project';
+			const meta = {
+				project: {
+					eyebrow: 'YOUR NEXT BIG THING',
+					title: 'سجّل تفاصيل مشروعك',
+					subtitle: 'خطوات بسيطة تفصل فكرتك عن أول محادثة مع فريقنا.'
+				},
+				maintenance: {
+					eyebrow: 'MAINTENANCE REQUEST',
+					title: 'طلب الصيانة',
+					subtitle: 'أخبرنا بمشكلة الموقع أو التطبيق وسنقوم بالمتابعة.'
+				},
+				advertise: {
+					eyebrow: 'ADVERTISING',
+					title: 'أعلن معنا',
+					subtitle: 'شاركنا تفاصيل حملتك الإعلانية لتصمّم لك خطة مناسبة.'
+				}
+			};
+			const entry = meta[formType] || meta.project;
+			$('#formTypeEyebrow').textContent = entry.eyebrow;
+			$('#formTitle').textContent = entry.title;
+			$('#formSubtitle').textContent = entry.subtitle;
+
+			const supportFieldWrap = $('#requestForm [name="supportAgent"]')?.closest('.field');
+			if (supportFieldWrap) {
+				supportFieldWrap.style.display = 'block';
+			}
+
+			const step2Title = $('#requestForm .step-pane[data-step="2"] .step-title');
+			const step3Title = $('#requestForm .step-pane[data-step="3"] .step-title');
+			const step2Label = $('#requestForm [name="projectName"]').closest('.field').querySelector('label');
+			const step2TypeLabel = $('#requestForm [name="projectType"]').closest('.field').querySelector('label');
+			const step3Label = $('#requestForm [name="description"]').closest('.field').querySelector('label');
+
+			if (formType === 'maintenance') {
+				step2Title.textContent = 'معلومات المشكلة';
+				step3Title.textContent = 'تفاصيل الصيانة';
+				step2Label.textContent = 'اسم الموقع أو التطبيق';
+				step2TypeLabel.textContent = 'نوع المشكلة';
+				step3Label.textContent = 'وصف المشكلة';
+			} else if (formType === 'advertise') {
+				step2Title.textContent = 'معلومات الحملة';
+				step3Title.textContent = 'تفاصيل الإعلان';
+				step2Label.textContent = 'اسم العلامة أو الحملة';
+				step2TypeLabel.textContent = 'نوع الإعلان';
+				step3Label.textContent = 'وصف الحملة';
+			} else {
+				step2Title.textContent = 'معلومات المشروع';
+				step3Title.textContent = 'تفاصيل المشروع';
+				step2Label.textContent = 'اسم المشروع';
+				step2TypeLabel.textContent = 'نوع المشروع';
+				step3Label.textContent = 'وصف المشروع';
+			}
+		};
+
+		function updateProgress() {
+			const percent = currentStep * 20;
+			$('#progressText').textContent = 'الخطوة ' + currentStep + ' من 5';
+			$('#progressPercent').textContent = percent + '%';
+			$('#progressBar').style.width = percent + '%';
+			$$('.step-labels span').forEach((label, index) => label.classList.toggle('current', index === currentStep - 1));
+			$$('.step-pane').forEach(pane => pane.classList.toggle('active', Number(pane.dataset.step) === currentStep));
+			$('#backButton').style.visibility = currentStep === 1 ? 'hidden' : 'visible';
+			$('#nextButton').textContent = currentStep === 5 ? '🚀 تأكيد وإرسال الطلب' : 'التالي ←';
+			updateFormTypeMeta();
+		}
+
+		function validateStep() {
+			$$('.error').forEach(error => error.textContent = '');
+			let valid = true;
+			const formType = form.dataset.formType || 'project';
+			const required = currentStep === 1 ? ['fullName','phone','whatsapp','supportAgent'] : currentStep === 2 ? ['projectName','projectType'] : currentStep === 3 ? ['description'] : [];
+			required.forEach(name => {
+				const field = form.elements[name];
+				if (!field || !field.value.trim()) {
+					if (field && field.nextElementSibling) field.nextElementSibling.textContent = '❌ هذا الحقل مطلوب.';
+					valid = false;
+				}
+			});
+			if (currentStep === 1 && form.elements.phone.value && !/^[+\d\s()-]{7,}$/.test(form.elements.phone.value)) {
+				form.elements.phone.nextElementSibling.textContent = '❌ رقم الهاتف غير صحيح.';
+				valid = false;
+			}
+			if (currentStep === 1 && form.elements.whatsapp.value && !/^[+\d\s()-]{7,}$/.test(form.elements.whatsapp.value)) {
+				form.elements.whatsapp.nextElementSibling.textContent = '❌ رقم WhatsApp غير صحيح.';
+				valid = false;
+			}
+			return valid;
+		}
+
+		function value(name) { return form.elements[name]?.value.trim() || 'لا يوجد'; }
+
+		function buildReview() {
+			const services = $$('input[name="services"]:checked').map(item => item.value).join('، ') || 'لا توجد خدمات محددة';
+			$('#reviewContent').innerHTML = '<div style="display:grid;gap:12px;"><div style="background:var(--bg);border:1px solid var(--line);border-radius:9px;padding:15px;"><h3 style="margin:0 0 11px;font-size:12px;color:var(--green);">👤 بيانات العميل</h3><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px 20px;font-size:11px;"><div><small style="color:var(--muted);margin-bottom:2px;display:block;">الاسم</small><p style="margin:0;">'+value('fullName')+'</p></div><div><small style="color:var(--muted);margin-bottom:2px;display:block;">الهاتف / WhatsApp</small><p style="margin:0;">'+value('phone')+' / '+value('whatsapp')+'</p></div><div style="grid-column:1/-1;"><small style="color:var(--muted);margin-bottom:2px;display:block;">موظف خدمة العملاء</small><p style="margin:0;">'+(form.elements.supportAgent?.value || 'غير محدد')+'</p></div></div></div><div style="background:var(--bg);border:1px solid var(--line);border-radius:9px;padding:15px;"><h3 style="margin:0 0 11px;font-size:12px;color:var(--green);">💻 تفاصيل المشروع</h3><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px 20px;font-size:11px;"><div><small style="color:var(--muted);margin-bottom:2px;display:block;">اسم المشروع</small><p style="margin:0;">'+value('projectName')+'</p></div><div><small style="color:var(--muted);margin-bottom:2px;display:block;">النوع</small><p style="margin:0;">'+value('projectType')+'</p></div><div style="grid-column:1/-1;"><small style="color:var(--muted);margin-bottom:2px;display:block;">الوصف</small><p style="margin:0;">'+value('description')+'</p></div><div style="grid-column:1/-1;"><small style="color:var(--muted);margin-bottom:2px;display:block;">الخدمات</small><p style="margin:0;">'+services+'</p></div></div></div></div>';
+		}
+
+		function makeOrderId() {
+			const date = new Date();
+			const datePart = String(date.getFullYear()).slice(-2) + String(date.getMonth()+1).padStart(2,'0') + String(date.getDate()).padStart(2,'0');
+			const key = 'amg-order-' + datePart;
+			const next = Number(localStorage.getItem(key) || 0) + 1;
+			localStorage.setItem(key, String(next));
+			return 'AMG-' + datePart + '-' + String(next).padStart(3,'0');
+		}
+
+		function buildMessage() {
+			const formType = form.dataset.formType || 'project';
+			const services = $$('input[name="services"]:checked').map(item => item.value).join('، ') || 'لا توجد';
+			const date = new Date();
+			const created = date.toLocaleDateString('ar-EG') + ' — ' + date.toLocaleTimeString('ar-EG', { hour:'2-digit', minute:'2-digit' });
+			if (formType === 'maintenance') {
+				const customerSupport = form.elements.supportAgent?.value || getSelectedSupportNumber();
+				return '🛠️ *طلب صيانة جديد | AMG DEV*\n\n━━━━━━━━━━━━━━━━━━\n\n👤 *بيانات العميل*\n\n• الاسم: '+value('fullName')+'\n• 📱 الهاتف: '+value('phone')+'\n• 💬 WhatsApp: '+value('whatsapp')+'\n• 👨‍💼 موظف الخدمة: '+customerSupport+'\n\n━━━━━━━━━━━━━━━━━━\n\n🔧 *تفاصيل المشكلة*\n\n• 📌 اسم الموقع / التطبيق: '+value('projectName')+'\n• 🗂️ نوع المشكلة: '+value('projectType')+'\n• ⚠️ الأولوية: '+value('priority')+'\n\n━━━━━━━━━━━━━━━━━━\n\n📝 *الوصف*\n\n'+value('description')+'\n\n━━━━━━━━━━━━━━━━━━\n\n🆔 *رقم الطلب*\n\n'+orderId+'\n\n⏰ *التاريخ*\n\n'+created+'\n\n━━━━━━━━━━━━━━━━━━\n\n💙 *AMG DEV*\n\n*Build • Manage • Deliver*';
+			}
+			const customerSupport = form.elements.supportAgent?.value || getSelectedSupportNumber();
+			return '🚀 *طلب مشروع جديد | AMG DEV*\n\n━━━━━━━━━━━━━━━━━━\n\n👤 *بيانات العميل*\n\n• الاسم: '+value('fullName')+'\n• 📱 الهاتف: '+value('phone')+'\n• 💬 WhatsApp: '+value('whatsapp')+'\n• 👨‍💼 موظف الخدمة: '+customerSupport+'\n\n━━━━━━━━━━━━━━━━━━\n\n💻 *تفاصيل المشروع*\n\n• 📌 اسم المشروع: '+value('projectName')+'\n• 🗂️ النوع: '+value('projectType')+'\n\n━━━━━━━━━━━━━━━━━━\n\n📝 *الوصف*\n\n'+value('description')+'\n\n━━━━━━━━━━━━━━━━━━\n\n🛠️ *الخدمات المطلوبة*\n\n'+services+'\n\n━━━━━━━━━━━━━━━━━━\n\n🆔 *رقم الطلب*\n\n'+orderId+'\n\n⏰ *التاريخ*\n\n'+created+'\n\n━━━━━━━━━━━━━━━━━━\n\n💙 *AMG DEV*\n\n*Build • Manage • Deliver*';
+		}
+
+		// ===== نظام المحفظة =====
+		function createWalletId() {
+			return 'WAL-' + Math.random().toString(16).slice(2, 8).toUpperCase();
+		}
+
+		function getWallets() {
+			try {
+				return JSON.parse(localStorage.getItem(WALLETS_KEY) || '[]');
+			} catch {
+				return [];
+			}
+		}
+
+		function saveWallets(wallets) {
+			localStorage.setItem(WALLETS_KEY, JSON.stringify(wallets));
+		}
+
+		function getCurrentWallet() {
+			try {
+				return JSON.parse(localStorage.getItem(WALLET_SESSION_KEY) || 'null');
+			} catch {
+				return null;
+			}
+		}
+
+		function setCurrentWallet(wallet) {
+			localStorage.setItem(WALLET_SESSION_KEY, JSON.stringify(wallet));
+			currentWallet = wallet;
+		}
+
+		function createWallet(name, phone) {
+			const wallets = getWallets();
+			const existing = wallets.find(w => w.phone === phone);
+			if (existing) {
+				setCurrentWallet(existing);
+				return existing;
+			}
+			const wallet = {
+				id: createWalletId(),
+				name,
+				phone,
+				points: 0,
+				history: [],
+				pointsRequests: [],
+				createdAt: new Date().toISOString()
+			};
+			wallets.push(wallet);
+			saveWallets(wallets);
+			setCurrentWallet(wallet);
+			return wallet;
+		}
+
+		function addTransaction(wallet, type, amount, reason) {
+			if (!wallet) return;
+			const wallets = getWallets();
+			const index = wallets.findIndex(w => w.id === wallet.id);
+			if (index < 0) return;
+			
+			const updated = wallets[index];
+			updated.points = Math.max(0, updated.points + (type === 'credit' ? amount : -amount));
+			updated.history = updated.history || [];
+			updated.history.unshift({
+				type,
+				amount,
+				reason,
+				createdAt: new Date().toISOString()
+			});
+			updated.history = updated.history.slice(0, 50);
+			
+			wallets[index] = updated;
+			saveWallets(wallets);
+			setCurrentWallet(updated);
+		}
+
+		function getRewardTransactions() {
+			try {
+				return JSON.parse(localStorage.getItem(REWARD_TRANSACTIONS_KEY) || '[]');
+			} catch {
+				return [];
+			}
+		}
+
+		function saveRewardTransactions(transactions) {
+			localStorage.setItem(REWARD_TRANSACTIONS_KEY, JSON.stringify(transactions));
+		}
+
+		function hasRewardTransaction(userId, orderId, type) {
+			const transactions = getRewardTransactions();
+			return transactions.some(tx => tx.user_id === userId && tx.order_id === orderId && tx.type === type);
+		}
+
+		function recordRewardTransaction(userId, orderId, points, type) {
+			if (!userId || !orderId || !type) return false;
+			if (hasRewardTransaction(userId, orderId, type)) return false;
+			const transactions = getRewardTransactions();
+			const result = {
+				id: 'reward-' + Date.now() + '-' + Math.random().toString(16).slice(2, 8),
+				user_id: userId,
+				order_id: orderId,
+				points,
+				type,
+				created_at: new Date().toISOString()
+			};
+			transactions.unshift(result);
+			saveRewardTransactions(transactions);
+			return true;
+		}
+
+		function awardPoints(orderId, walletId, reason, pointsAmount = 10) {
+			const wallets = getWallets();
+			const wallet = wallets.find(w => w.id === walletId);
+			if (!wallet) return false;
+			const rewardType = String(reason || 'request').toLowerCase();
+			if (hasRewardTransaction(wallet.id, orderId, rewardType)) return false;
+			wallet.awardedRequests = wallet.awardedRequests || [];
+			if (wallet.awardedRequests.includes(orderId)) return false;
+			wallet.awardedRequests.push(orderId);
+			const rewardRecorded = recordRewardTransaction(wallet.id, orderId, pointsAmount, rewardType);
+			if (!rewardRecorded) return false;
+			addTransaction(wallet, 'credit', pointsAmount, reason);
+			return true;
+		}
+
+		function getPointsForFormType(formType) {
+			const points = {
+				'project': 10,
+				'maintenance': 5,
+				'advertise': 15
+			};
+			return points[formType] || 10;
+		}
+
+		function renderWalletScreen() {
+			const wallet = getCurrentWallet();
+			if (!wallet) {
+				$('#createWalletModal').classList.add('open');
+				return;
+			}
+			
+			openScreen('walletScreen');
+			$('#walletGreeting').textContent = 'مرحبًا ' + wallet.name;
+			$('#walletBalance').textContent = wallet.points + ' ⭐';
+			$('#walletId').textContent = wallet.id;
+			
+			const earned = (wallet.history || []).filter(h => h.type === 'credit').reduce((sum, h) => sum + h.amount, 0);
+			const used = (wallet.history || []).filter(h => h.type === 'debit').reduce((sum, h) => sum + h.amount, 0);
+			$('#walletEarned').textContent = earned;
+			$('#walletUsed').textContent = used;
+			$('#walletLast').textContent = wallet.history && wallet.history.length > 0 ? new Date(wallet.history[0].createdAt).toLocaleDateString('ar-EG') : '-';
+			
+			const usePointsInfo = $('#usePointsInfo');
+			if (wallet.points < 100) {
+				usePointsInfo.textContent = '🔒 تحتاج إلى جمع 100 نقطة على الأقل لاستخدام النقاط.';
+				$('#usePointsBtn').disabled = true;
+			} else {
+				usePointsInfo.textContent = '✅ يمكنك استخدام نقاطك للحصول على خصم.';
+				$('#usePointsBtn').disabled = false;
+			}
+			
+			const historyList = $('#walletHistoryList');
+			if (!wallet.history || wallet.history.length === 0) {
+				historyList.innerHTML = '<li style="text-align:center;color:var(--muted);padding:20px;">لا توجد عمليات بعد</li>';
+			} else {
+				historyList.innerHTML = wallet.history.slice(0, 15).map(entry => {
+					const sign = entry.type === 'credit' ? '+' : '-';
+					const badgeClass = entry.type === 'credit' ? 'type-credit' : 'type-debit';
+					const typeLabel = entry.type === 'credit' ? 'إضافة' : 'خصم';
+					return '<li><div class="left"><span class="amount">'+sign+entry.amount+' ⭐</span><span class="reason">'+entry.reason+'</span></div><div><span class="date">'+new Date(entry.createdAt).toLocaleDateString('ar-EG')+'</span><span class="type-badge '+badgeClass+'">'+typeLabel+'</span></div></li>';
+				}).join('');
+			}
+			
+			const pointsReqList = $('#pointsRequestsList');
+			const allRequests = (wallet.pointsRequests || []);
+			if (!allRequests.length) {
+				pointsReqList.innerHTML = '<li style="text-align:center;color:var(--muted);padding:20px;">لا توجد طلبات حتى الآن</li>';
+			} else {
+				pointsReqList.innerHTML = allRequests.slice(0, 10).map(req => {
+					const statusText = req.status || 'قيد المراجعة';
+					const statusClass = req.status === 'approved' ? 'status-done' : req.status === 'rejected' ? 'status-rejected' : 'status-pending';
+					return '<li><div class="left"><span class="amount">'+req.amount+' ⭐</span><span class="reason">خصم '+req.amount+' نقطة = '+Math.round(req.amount / 10)+' جنيه</span></div><div><span class="date">'+new Date(req.createdAt).toLocaleDateString('ar-EG')+'</span><span class="order-status '+statusClass+'">'+statusText+'</span></div></li>';
+				}).join('');
+			}
+		}
+
+		function updateWalletBadge() {
+			const wallet = getCurrentWallet();
+			const badge = $('#walletButton');
+			if (!wallet) {
+				badge.textContent = '⭐ إنشاء محفظة';
+			} else {
+				badge.textContent = '⭐ ' + wallet.points + ' نقطة';
+			}
+		}
+
+		// Event Listeners
+		$('#homeLink').onclick = e => { e.preventDefault(); openScreen('homeScreen', { resetHistory: true, pushHistory: false }); };
+		$('#globalBackBtn').onclick = () => goBack();
+		$('#walletButton').onclick = () => { openScreen('walletScreen'); renderWalletScreen(); };
+		
+		$('#startButton').onclick = () => {
+			const requestForm = document.querySelector('#requestForm');
+			requestForm.setAttribute('data-form-type', 'project');
+			currentStep = 1;
+			requestForm.reset();
+			openScreen('formScreen');
+			restoreDraft();
+			updateProgress();
+		};
+
+		$('#startMaintenanceButton').onclick = () => {
+			openScreen('maintenanceFormScreen');
+			const maintenanceForm = $('#maintenanceForm');
+			if (maintenanceForm) maintenanceForm.reset();
+		};
+
+		$('#startAdvertiseButton').onclick = () => {
+			const adForm = $('#advertiseForm');
+			if (adForm) adForm.reset();
+			openScreen('advertiseFormScreen');
+		};
+
+		$('#nextButton').onclick = () => {
+			if (!validateStep()) return;
+			saveDraft();
+			if (currentStep < 5) {
+				currentStep++;
+				if (currentStep === 5) buildReview();
+				updateProgress();
+			} else {
+				const formType = document.querySelector('#requestForm').getAttribute('data-form-type') || 'project';
+				const payload = {
+					fullName: value('fullName'),
+					phone: value('phone'),
+					whatsapp: value('whatsapp'),
+					email: value('email'),
+					country: value('country'),
+					city: value('city'),
+					projectName: value('projectName'),
+					projectType: value('projectType'),
+					description: value('description'),
+					features: value('features'),
+					reference: value('reference'),
+					budget: value('budget'),
+					duration: value('duration'),
+					deadline: value('deadline'),
+					priority: value('priority'),
+					services: $$('input[name="services"]:checked').map(item => item.value)
+				};
+				orderId = makeOrderId();
+				$('#successOrderId').textContent = orderId;
+				openScreen('successScreen');
+				if ((document.querySelector('#requestForm').getAttribute('data-form-type') || 'project') === 'maintenance') {
+					const targetNumber = getSelectedSupportNumber();
+					window.open('https://wa.me/' + targetNumber + '?text=' + encodeURIComponent(buildMessage()), '_blank', 'noopener');
+				}
+				
+				// حفظ الطلب والنقاط
+				const wallet = getCurrentWallet();
+				if (wallet) {
+					payload.walletId = wallet.id;
+					const pointsAmount = getPointsForFormType(formType);
+					const rewardType = {
+						'project': 'project',
+						'maintenance': 'maintenance',
+						'advertise': 'advertise'
+					}[formType] || 'request';
+					const typeLabel = {
+						'project': 'طلب مشروع جديد',
+						'maintenance': 'طلب صيانة',
+						'advertise': 'إعلان جديد'
+					}[formType] || 'طلب جديد';
+					const pointsGranted = awardPoints(orderId, wallet.id, rewardType, pointsAmount);
+					updateWalletBadge();
+					showToast(pointsGranted ? '✅ تم إرسال الطلب بنجاح! +' + pointsAmount + ' نقاط' : '✅ تم إرسال الطلب بنجاح!');
+				}
+				
+				const requests = JSON.parse(localStorage.getItem(REQUESTS_KEY) || '{}');
+				requests[orderId] = {
+					code: orderId,
+					type: formType,
+					payload,
+					createdAt: new Date().toISOString(),
+					status: 'قيد التنفيذ'
+				};
+				localStorage.setItem(REQUESTS_KEY, JSON.stringify(requests));
+			}
+		};
+
+		$('#backButton').onclick = () => {
+			if (currentStep > 1) {
+				currentStep--;
+				updateProgress();
+			}
+		};
+
+		$('#whatsappButton').onclick = () => {
+			const targetNumber = getSelectedSupportNumber();
+			window.open('https://wa.me/' + targetNumber + '?text=' + encodeURIComponent(buildMessage()), '_blank', 'noopener');
+		};
+
+		$('#maintenanceSubmitBtn').onclick = () => {
+			const formEl = $('#maintenanceForm');
+			const name = formEl.elements.maintenanceName.value.trim();
+			const phone = formEl.elements.maintenancePhone.value.trim();
+			const whatsapp = formEl.elements.maintenanceWhatsapp.value.trim();
+			const site = formEl.elements.maintenanceSite.value.trim();
+			const type = formEl.elements.maintenanceType.value.trim();
+			const description = formEl.elements.maintenanceDescription.value.trim();
+			const agent = formEl.elements.maintenanceSupportAgent.value.trim();
+			if (!name || !phone || !whatsapp || !site || !type || !description || !agent) {
+				showToast('❌ يرجى ملء جميع الحقول المطلوبة');
+				return;
+			}
+			orderId = makeOrderId();
+			$('#successOrderId').textContent = orderId;
+			const message = '🛠️ *طلب صيانة جديد | AMG DEV*\n\n👤 *الاسم:* ' + name + '\n📱 *الهاتف:* ' + phone + '\n💬 *WhatsApp:* ' + whatsapp + '\n📌 *اسم الموقع/التطبيق:* ' + site + '\n🧩 *نوع المشكلة:* ' + type + '\n📝 *الوصف:* ' + description + '\n🆔 *رقم الطلب:* ' + orderId;
+			window.open('https://wa.me/' + normalizeWhatsAppNumber(agent) + '?text=' + encodeURIComponent(message), '_blank', 'noopener');
+			openScreen('successScreen');
+			showToast('✅ تم إرسال طلب الصيانة للموظف المختار');
+		};
+
+		$('#maintenanceCancelBtn').onclick = () => {
+			openScreen('homeScreen', { resetHistory: true, pushHistory: false });
+		};
+
+		$('#maintenanceBackHome').onclick = () => {
+			openScreen('homeScreen', { resetHistory: true, pushHistory: false });
+		};
+
+		$('#advertiseSubmitBtn').onclick = () => {
+			const formEl = $('#advertiseForm');
+			const name = formEl.elements.advertiseName.value.trim();
+			const phone = formEl.elements.advertisePhone.value.trim();
+			const whatsapp = formEl.elements.advertiseWhatsapp.value.trim();
+			const brand = formEl.elements.advertiseBrand.value.trim();
+			const type = formEl.elements.advertiseType.value.trim();
+			const description = formEl.elements.advertiseDescription.value.trim();
+			const duration = formEl.elements.advertiseDuration.value.trim();
+			const agent = formEl.elements.advertiseSupportAgent.value.trim();
+			if (!name || !phone || !whatsapp || !brand || !type || !description || !duration || !agent) {
+				showToast('❌ يرجى ملء جميع الحقول المطلوبة');
+				return;
+			}
+			orderId = makeOrderId();
+			$('#successOrderId').textContent = orderId;
+			const message = '📢 *طلب إعلان جديد | AMG DEV*\n\n👤 *الاسم:* ' + name + '\n📱 *الهاتف:* ' + phone + '\n💬 *WhatsApp:* ' + whatsapp + '\n🏢 *العلامة/الشركة:* ' + brand + '\n🧩 *نوع الإعلان:* ' + type + '\n⏱️ *مدة الإعلان:* ' + duration + '\n📝 *وصف الحملة:* ' + description + '\n🆔 *رقم الطلب:* ' + orderId;
+			window.open('https://wa.me/' + normalizeWhatsAppNumber(agent) + '?text=' + encodeURIComponent(message), '_blank', 'noopener');
+			openScreen('successScreen');
+			showToast('✅ تم إرسال طلب الإعلان للموظف المختار');
+		};
+
+		$('#advertiseCancelBtn').onclick = () => {
+			openScreen('homeScreen', { resetHistory: true, pushHistory: false });
+		};
+
+		$('#advertiseBackHome').onclick = () => {
+			openScreen('homeScreen', { resetHistory: true, pushHistory: false });
+		};
+
+		$('#copyButton').onclick = async () => {
+			try {
+				await navigator.clipboard.writeText(orderId);
+				showToast('تم نسخ رقم الطلب');
+			} catch {
+				showToast('رقم الطلب: ' + orderId);
+			}
+		};
+
+		$('#formBackHome').onclick = () => {
+			currentStep = 1;
+			goBack();
+		};
+
+		$('#returnButton').onclick = () => {
+			currentStep = 1;
+			goBack();
+		};
+
+		$('#trackHomeButton').onclick = () => openScreen('trackScreen');
+		$('#trackStatusButton').onclick = () => openScreen('trackScreen');
+
+		$('#trackSubmit').onclick = () => {
+			const code = $('#trackInput').value.trim();
+			const requests = JSON.parse(localStorage.getItem(REQUESTS_KEY) || '{}');
+			const record = requests[code];
+			if (!record) {
+				$('#trackResult').innerHTML = '<h3>لا يوجد طلب بهذا الكود</h3>';
+				$('#trackResult').classList.add('visible');
+			} else {
+				const payload = record.payload || {};
+				const items = Object.entries(payload).filter(([k]) => k !== 'services').map(([key, value]) => '<li class="detail-item"><span>'+key+'</span><strong>'+value+'</strong></li>').join('');
+				$('#trackResult').innerHTML = '<div class="track-layout"><div class="track-summary"><span class="badge">طلب</span><h3>'+record.code+'</h3></div><ul class="detail-list" style="margin:0;padding:0;list-style:none;">'+items+'</ul></div>';
+				$('#trackResult').classList.add('visible');
+			}
+		};
+
+		if ($('#trackInput')) {
+			$('#trackInput').addEventListener('keydown', e => {
+				if (e.key === 'Enter') {
+					e.preventDefault();
+					$('#trackSubmit').click();
+				}
+			});
+		}
+
+		// Wallet Modal
+		$('#cancelWalletBtn').onclick = () => $('#createWalletModal').classList.remove('open');
+		$('#confirmWalletBtn').onclick = () => {
+			const name = $('#walletForm').elements.walletName.value.trim();
+			const phone = $('#walletForm').elements.walletPhone.value.trim();
+			if (!name || !phone) {
+				showToast('❌ الاسم ورقم الهاتف مطلوبان');
+				return;
+			}
+			createWallet(name, phone);
+			$('#createWalletModal').classList.remove('open');
+			showToast('🎉 تم إنشاء محفظتك بنجاح!');
+			updateWalletBadge();
+			renderWalletScreen();
+		};
+
+		// Use Points Modal
+		$('#usePointsBtn').onclick = () => {
+			const wallet = getCurrentWallet();
+			if (!wallet || wallet.points < 100) {
+				showToast('❌ لا يوجد رصيد كافي');
+				return;
+			}
+			$('#usePointsModalText').textContent = 'رصيدك الحالي: ' + wallet.points + ' نقطة. الحد الأدنى: 100 نقطة.';
+			$('#usePointsForm').elements.pointsAmount.max = wallet.points;
+			$('#usePointsModal').classList.add('open');
+		};
+
+		$('#cancelUsePointsBtn').onclick = () => $('#usePointsModal').classList.remove('open');
+
+		$('#usePointsForm').elements.pointsAmount.oninput = e => {
+			const amount = Number(e.target.value);
+			const discount = Math.round(amount / 10);
+			$('#discountCalculation').textContent = amount + ' نقطة = ' + discount + ' جنيه خصم';
+		};
+
+		$('#confirmUsePointsBtn').onclick = () => {
+			const wallet = getCurrentWallet();
+			const amount = Number($('#usePointsForm').elements.pointsAmount.value);
+			if (!amount || amount < 100 || amount > wallet.points) {
+				showToast('❌ المبلغ غير صحيح');
+				return;
+			}
+			
+			// خصم النقاط من الرصيد
+			const wallets = getWallets();
+			const index = wallets.findIndex(w => w.id === wallet.id);
+			if (index < 0) return;
+			
+			const updatedWallet = wallets[index];
+			updatedWallet.points = Math.max(0, updatedWallet.points - amount);
+			updatedWallet.history = updatedWallet.history || [];
+			updatedWallet.history.unshift({
+				type: 'debit',
+				amount,
+				reason: 'استخدام النقاط',
+				createdAt: new Date().toISOString()
+			});
+			updatedWallet.history = updatedWallet.history.slice(0, 50);
+			
+			const discount = Math.round(amount / 10);
+			const request = {
+				id: 'POINT-' + String(Date.now()).slice(-6),
+				amount,
+				discount,
+				walletId: wallet.id,
+				status: 'قيد المراجعة',
+				createdAt: new Date().toISOString()
+			};
+			
+			updatedWallet.pointsRequests = updatedWallet.pointsRequests || [];
+			updatedWallet.pointsRequests.unshift(request);
+			
+			wallets[index] = updatedWallet;
+			saveWallets(wallets);
+			setCurrentWallet(updatedWallet);
+			
+			$('#usePointsModal').classList.remove('open');
+			showToast('✅ تم تقديم طلب استخدام النقاط! تم خصم ' + amount + ' نقطة.');
+			updateWalletBadge();
+			renderWalletScreen();
+		};
+
+		// Form Events
+		form.addEventListener('input', saveDraft);
+		form.addEventListener('change', saveDraft);
+
+		// Theme Toggle
+		$('#themeToggle').onclick = () => {
+			const dark = document.documentElement.dataset.theme === 'dark';
+			document.documentElement.dataset.theme = dark ? 'light' : 'dark';
+			localStorage.setItem(THEME_KEY, dark ? 'light' : 'dark');
+			$('#themeToggle').textContent = dark ? '☾' : '☀';
+		};
+		if (localStorage.getItem(THEME_KEY) === 'dark') {
+			document.documentElement.dataset.theme = 'dark';
+			$('#themeToggle').textContent = '☀';
+		}
+
+		// Init
+		updateWalletBadge();
+	</script>
+</body>
+</html>
